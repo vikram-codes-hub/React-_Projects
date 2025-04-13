@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const Todos = ({ todos }) => {
+  const [todolist, settodollist] = useState(todos)
+
+  const toggeler = (index) => {
+    const updatedtodo = [...todolist]
+    updatedtodo[index].completed = !updatedtodo[index].completed
+    settodollist(updatedtodo)
+  }
+
   return (
     <Container>
-      {todos.map((todo, index) => (
+      {todolist.map((todo, index) => (
         <TodoCard key={index} completed={todo.completed}>
           <SectionHeading>Title</SectionHeading>
           <Text>{todo.title}</Text>
@@ -12,7 +20,7 @@ const Todos = ({ todos }) => {
           <SectionHeading>Description</SectionHeading>
           <Text>{todo.description}</Text>
 
-          <ActionButton completed={todo.completed}>
+          <ActionButton onClick={() => toggeler(index)} completed={todo.completed}>
             {todo.completed ? 'Completed' : 'Mark as completed'}
           </ActionButton>
         </TodoCard>
@@ -66,4 +74,3 @@ const ActionButton = styled.button`
       completed ? 'gray' : '#0056b3'};
   }
 `
-
